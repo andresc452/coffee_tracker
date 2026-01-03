@@ -1,7 +1,7 @@
 from typing import Optional, List
 from sqlmodel import SQLModel, Field, Relationship, Index
 
-# TABLA DE FINCAS
+# ==== TABLA DE FINCAS ====
 class Farm(SQLModel, table=True):
     __tablename__ = "farms"
 
@@ -14,7 +14,7 @@ class Farm(SQLModel, table=True):
     lots: List["CoffeeOrigin"] = Relationship(back_populates="farm")
     
 
-# TABLA DE LOTES/ORIGENES
+# ==== TABLA DE LOTES/ORIGENES ====
 class CoffeeOrigin(SQLModel, table=True):
     __tablename__ = "coffee_origins"
 
@@ -33,5 +33,5 @@ class CoffeeOrigin(SQLModel, table=True):
 
     # Indice Compuesto para opt de produ
     __table_args__ = (
-        Index("ix_origin_variety", "variety", "process")
+        Index("ix_origin_variety", "variety", "process"),
     )
