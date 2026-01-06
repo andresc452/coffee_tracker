@@ -3,14 +3,16 @@ from sqlmodel import Session, select
 from typing import List
 
 # Importaciones internas
-from src.api.db.session import get_session
-from src.api.db.models import Farm, CoffeeLot
-from ....schemas.schemas import (
+# Importaciones ajustadas a la nueva estructura profesional
+from app.db.session import get_session
+from app.models.models import Farm, CoffeeLot
+from app.schemas.schemas import (
     FarmCreate, FarmRead, FarmUpdate, FarmWithLots,
     CoffeeLotCreate, CoffeeLotRead, CoffeeLotUpdate
 )
 
-router = APIRouter(prefix="/coffee", tags=["Coffee Management"])
+# Se elimina el prefijo "/coffee" si se va a centralizar en api.py
+router = APIRouter()
 
 # ==========================================
 # ENDPOINTS PARA FINCAS (FARMS)

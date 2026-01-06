@@ -4,22 +4,26 @@ from pydantic import Field
 class Settings(BaseSettings):
     """
     Clase central de configuración. 
-    Pydantic leerá automáticamente el archivo .env y mapeará los valores.
+    Pydantic leerá automáticamente el archivo .env y mapeará los valores 
+    validando sus tipos de datos.
     """
-    # Definimos las variables con sus tipos y validaciones
+    
+    # 1. Definición de variables con tipos y valores por defecto
     APP_NAME: str = "Coffee Tracker API"
     DEBUG: bool = Field(default=False)
     PORT: int = Field(default=8000)
     
-    # La URL es obligatoria, si no está en el .env, Pydantic lanzará error
+    # 2. Variable obligatoria: si falta en el .env, la app lanzará un error inmediato.
     DATABASE_URL: str
 
-    # Configuración de búsqueda del archivo .env
+    # 3. Configuración del comportamiento de Pydantic
     model_config = SettingsConfigDict(
-        env_file=".env", 
+        # Apunta al archivo .env en la raíz del proyecto
+        env_file=".env",
         env_file_encoding="utf-8",
-        extra="ignore" # Ignora variables extra que no estén definidas aquí
+        # 'ignore' evita errores si hay variables extra en el .env que no usamos aquí
+        extra="ignore"
     )
 
-# Instanciamos para que el resto de la app importe este objeto
+# Instancia única (Singleton) para ser importada en toda la aplicación
 settings = Settings()

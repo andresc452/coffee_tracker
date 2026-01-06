@@ -19,8 +19,8 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copiar el código fuente
-COPY ./src ./src
+COPY ./app ./app
 
 # Comando para ejecutar la app
 # Nota: Usamos 0.0.0.0 para que sea accesible fuera del contenedor
-CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8002"]
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8002"]
