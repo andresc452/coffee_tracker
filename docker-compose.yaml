@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: coffee_db
+    restart: always
+    environment:
+      - POSTGRES_USER=coffee_user
+      - POSTGRES_PASSWORD=coffee_pw
+      - POSTGRES_DB=coffee_tracker
+    ports:
+      - "5433:5432" # Conexión externa por el 5433
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  api:
+    build: .
+    container_name: coffee_api
+    volumes:
+      - .:/app
+    ports:
+      - "8002:8002"
+    environment:
+      # Se mantiene tu URL con el driver +psycopg (Psycopg 3)
+      - DATABASE_URL=postgresql+psycopg://coffee_user:coffee_pw@db:5432/coffee_tracker
+      - DEBUG=True
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:

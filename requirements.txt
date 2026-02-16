@@ -8,3 +8,4 @@ timescaledb
 requests
 python-decouple
 psycopg[binary] 
+pydantic_settings
